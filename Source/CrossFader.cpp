@@ -1,10 +1,10 @@
 #include "CrossFader.h"
 
-void CrossFader::prepare(double sampleRate, float fadeTimeSeconds)
+void CrossFader::prepare(double sampleRate, float fadeTimeMs)
 {
     currentBus = targetBus = requestedBus = 0;
 
-    fader.reset(sampleRate, fadeTimeSeconds);
+    fader.reset(sampleRate, fadeTimeMs / 1000.0);
     fader.setCurrentAndTargetValue(0.0);
 }
 

@@ -59,12 +59,12 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="32" x="0.32875" y="0.5643153526970954" useARA="0" uiLastX_Normal="279"
-          uiLastY_Normal="347" uiopen_Normal="0">
+  <FILTER uid="32" x="0.32875" y="0.5643153526970954" useARA="0" uiLastX_Normal="94"
+          uiLastY_Normal="221" uiopen_Normal="1">
     <PLUGIN name="Swichander" format="VST3" category="Fx" manufacturer="Vasilovo"
             version="1.0.0" file="/Users/vasil/Library/Audio/Plug-Ins/VST3/Swichander.vst3"
-            uniqueId="15f5b35c" isInstrument="0" fileTime="19bf79e7ac0" infoUpdateTime="19bf7a0448c"
-            numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
+            uniqueId="15f5b35c" isInstrument="0" fileTime="19c1dd96d2d" infoUpdateTime="19c1ddae5e8"
+            numInputs="10" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="33955f66"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
     <LAYOUT>
@@ -80,9 +80,10 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <CONNECTION srcFilter="29" srcChannel="0" dstFilter="32" dstChannel="0"/>
-  <CONNECTION srcFilter="29" srcChannel="1" dstFilter="32" dstChannel="1"/>
+  <CONNECTION srcFilter="29" srcChannel="0" dstFilter="32" dstChannel="2"/>
+  <CONNECTION srcFilter="29" srcChannel="1" dstFilter="32" dstChannel="3"/>
   <CONNECTION srcFilter="30" srcChannel="4096" dstFilter="29" dstChannel="4096"/>
+  <CONNECTION srcFilter="30" srcChannel="4096" dstFilter="32" dstChannel="4096"/>
   <CONNECTION srcFilter="32" srcChannel="0" dstFilter="28" dstChannel="0"/>
   <CONNECTION srcFilter="32" srcChannel="1" dstFilter="28" dstChannel="1"/>
 </FILTERGRAPH>

@@ -82,6 +82,7 @@ void SwichanderAudioProcessor::changeProgramName(int index, const juce::String& 
 //==============================================================================
 void SwichanderAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
+    midiDebouncer.prepare(sampleRate, samplesPerBlock, 1000);
     crossFader.prepare(sampleRate, 0.02f);
 }
 
@@ -122,6 +123,10 @@ void SwichanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, ju
 
 void SwichanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
 {
+    if (auto msg = midiDebouncer.processBlock(midi))
+    {
+        printf("Yeah: %s\n", msg->getRawData());
+    }
     for (const auto metadata : midi)
     {
         const auto msg = metadata.getMessage();

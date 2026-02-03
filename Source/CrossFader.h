@@ -5,7 +5,7 @@
 class CrossFader
 {
 public:
-    void prepare(double sampleRate, float fadeTimeSeconds);
+    void prepare(double sampleRate, int fadeTimeMs);
     void requestBus(int newBus);
     float getNextValue();
 

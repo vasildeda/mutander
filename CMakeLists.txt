@@ -15,7 +15,7 @@ juce_add_plugin(Swichander
     PLUGIN_NAME "Swichander"
     VERSION 1.0.0
     IS_SYNTH FALSE
-    NEEDS_MIDI_INPUT FALSE
+    NEEDS_MIDI_INPUT TRUE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
@@ -27,6 +27,7 @@ juce_add_plugin(Swichander
 target_sources(Swichander PRIVATE
     Source/CrossFader.cpp
     Source/LongPressButton.cpp
+    Source/MidiDebouncer.cpp
     Source/PluginProcessor.cpp
     Source/PluginEditor.cpp
 )

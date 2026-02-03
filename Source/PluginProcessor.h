@@ -9,6 +9,7 @@
 #pragma once
 
 #include "CrossFader.h"
+#include "MidiDebouncer.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_core/juce_core.h>
 
@@ -57,6 +58,7 @@ public:
 
 private:
     //==============================================================================
+    MidiDebouncer midiDebouncer;
     CrossFader crossFader;
 
     //==============================================================================
