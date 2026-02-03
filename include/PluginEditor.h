@@ -14,8 +14,20 @@
 #include "PluginProcessor.h"
 
 //==============================================================================
-/**
-*/
+class LogoPlaceholder : public juce::Component
+{
+public:
+    void paint(juce::Graphics& g) override
+    {
+        g.setColour(juce::Colours::darkgrey);
+        g.fillRoundedRectangle(getLocalBounds().toFloat().reduced(4), 8.0f);
+        g.setColour(juce::Colours::white);
+        g.setFont(16.0f);
+        g.drawText("LOGO", getLocalBounds(), juce::Justification::centred);
+    }
+};
+
+//==============================================================================
 class SwichanderAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
@@ -27,9 +39,11 @@ public:
     void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     SwichanderAudioProcessor& audioProcessor;
+
+    LogoPlaceholder logo;
+    juce::ToggleButton switchButton { "Switch" };
+    std::array<juce::Label, 5> midiLabels;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SwichanderAudioProcessorEditor)
 };

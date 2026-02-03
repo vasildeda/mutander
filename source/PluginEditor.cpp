@@ -13,8 +13,16 @@
 SwichanderAudioProcessorEditor::SwichanderAudioProcessorEditor (SwichanderAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
+    addAndMakeVisible(logo);
+    addAndMakeVisible(switchButton);
+
+    for (int i = 0; i < 5; ++i)
+    {
+        midiLabels[i].setText("MIDI " + juce::String(i + 1), juce::dontSendNotification);
+        midiLabels[i].setJustificationType(juce::Justification::centred);
+        addAndMakeVisible(midiLabels[i]);
+    }
+
     setSize (704, 396);
 }
 
@@ -25,16 +33,33 @@ SwichanderAudioProcessorEditor::~SwichanderAudioProcessorEditor()
 //==============================================================================
 void SwichanderAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void SwichanderAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    using Track = juce::Grid::TrackInfo;
+    using Fr = juce::Grid::Fr;
+
+    juce::Grid grid;
+    grid.templateRows = { Track(Fr(1)), Track(Fr(1)) };
+    grid.templateColumns = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)),
+                             Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
+
+    grid.items = {
+        juce::GridItem(logo),
+        juce::GridItem(),  // empty
+        juce::GridItem(),  // empty
+        juce::GridItem(),  // empty
+        juce::GridItem(),  // empty
+        juce::GridItem(),  // empty
+        juce::GridItem(switchButton),
+        juce::GridItem(midiLabels[0]),
+        juce::GridItem(midiLabels[1]),
+        juce::GridItem(midiLabels[2]),
+        juce::GridItem(midiLabels[3]),
+        juce::GridItem(midiLabels[4])
+    };
+
+    grid.performLayout(getLocalBounds());
 }
