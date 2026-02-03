@@ -23,19 +23,19 @@ juce_add_plugin(Swichander
     PLUGIN_MANUFACTURER "Vasilovo"
 )
 
-# Add headers
-target_include_directories(Swichander
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # Add source files
 target_sources(Swichander PRIVATE
-    Source/CrossFader.cpp
-    Source/LongPressButton.cpp
-    Source/MidiDebouncer.cpp
-    Source/PluginProcessor.cpp
-    Source/PluginEditor.cpp
+    source/CrossFader.cpp
+    source/LongPressButton.cpp
+    source/MidiDebouncer.cpp
+    source/PluginProcessor.cpp
+    source/PluginEditor.cpp
+)
+
+# Add headers
+target_include_directories(Swichander PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/source
 )
 
 # Add JUCE modules

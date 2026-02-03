@@ -1,4 +1,4 @@
 CompileFlags:
   Add:
+    - "-Iinclude"
     - "-Ilibs/juce"
-    - "-ISource"
