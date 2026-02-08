@@ -70,6 +70,9 @@ public:
     // Read trigger value for display (returns -1 if unassigned)
     int32_t getMidiTrigger(int bus) const;
 
+    // Clear a MIDI trigger assignment
+    void clearMidiTrigger(int bus);
+
     // Select a bus (from GUI click)
     void selectBus(int bus);
 

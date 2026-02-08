@@ -23,6 +23,7 @@ SwitchanderAudioProcessorEditor::SwitchanderAudioProcessorEditor(SwitchanderAudi
             audioProcessor_.selectBus(i);
         };
         channelButtons_[i].onLongPress = [this, i] {
+            audioProcessor_.clearMidiTrigger(i);
             audioProcessor_.midiLearnTarget_.store(i, std::memory_order_relaxed);
             updateChannelButtons();
         };

@@ -242,6 +242,12 @@ int32_t SwitchanderAudioProcessor::getMidiTrigger(int bus) const
     return midiTriggers_[bus].load(std::memory_order_relaxed);
 }
 
+void SwitchanderAudioProcessor::clearMidiTrigger(int bus)
+{
+    if (bus >= 0 && bus < 5)
+        midiTriggers_[bus].store(kUnassignedTrigger, std::memory_order_relaxed);
+}
+
 void SwitchanderAudioProcessor::selectBus(int bus)
 {
     if (bus < 0 || bus >= 5)
