@@ -13,7 +13,8 @@
 SwitchanderAudioProcessorEditor::SwitchanderAudioProcessorEditor(SwitchanderAudioProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor_(p)
 {
-    addAndMakeVisible(logo_);
+    background_ = juce::Drawable::createFromImageData(BinaryData::background_svg,
+                                                      BinaryData::background_svgSize);
 
     for (int i = 0; i < 5; ++i)
     {
@@ -86,6 +87,10 @@ void SwitchanderAudioProcessorEditor::updateChannelButtons()
 void SwitchanderAudioProcessorEditor::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
+
+    if (background_)
+        background_->drawWithin(g, getLocalBounds().toFloat(),
+                                juce::RectanglePlacement::centred, 1.0f);
 }
 
 void SwitchanderAudioProcessorEditor::resized()
@@ -107,7 +112,6 @@ void SwitchanderAudioProcessorEditor::resized()
     auto marginRight = juce::GridItem::Margin(0, gap, gap, 0);   // bottom, right
 
     grid.items = {
-        juce::GridItem(logo_).withColumn({ 2, 5 }).withRow({ 1, 2 }),  // span columns 2-4
         juce::GridItem(channelButtons_[0]).withColumn({ 1, 2 }).withRow({ 2, 3 }).withMargin(marginLeft),
         juce::GridItem(channelButtons_[1]).withColumn({ 2, 3 }).withRow({ 2, 3 }).withMargin(marginMiddle),
         juce::GridItem(channelButtons_[2]).withColumn({ 3, 4 }).withRow({ 2, 3 }).withMargin(marginMiddle),

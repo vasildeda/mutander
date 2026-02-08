@@ -25,14 +25,12 @@ juce_add_plugin(Switchander
 
 # Add resources
 juce_add_binary_data(SwitchanderResources SOURCES
-    resources/vr.svg
-    resources/switchander.svg
+    resources/background.svg
 )
 
 # Add source files
 target_sources(Switchander PRIVATE
     source/CrossFader.cpp
-    source/Logo.cpp
     source/LongPressButton.cpp
     source/MidiDebouncer.cpp
     source/PluginProcessor.cpp

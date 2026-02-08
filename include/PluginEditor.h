@@ -9,7 +9,7 @@
 #pragma once
 
 #include <juce_audio_processors/juce_audio_processors.h>
-#include "Logo.h"
+#include "BinaryData.h"
 #include "LongPressButton.h"
 #include "PluginProcessor.h"
 
@@ -27,7 +27,7 @@ public:
 private:
     SwitchanderAudioProcessor& audioProcessor_;
 
-    Logo logo_;
+    std::unique_ptr<juce::Drawable> background_;
     std::array<LongPressButton, 5> channelButtons_;
 
     void updateChannelButtons();
