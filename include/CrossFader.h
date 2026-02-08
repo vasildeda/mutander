@@ -16,11 +16,8 @@ public:
     State getNextState();
 
 private:
-    enum class Phase { Idle, FadingOut, FadingIn };
-
     int activeBus_ = 0;
     int requestedBus_ = 0;
-    Phase phase_ = Phase::Idle;
 
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> fader_;
 };
