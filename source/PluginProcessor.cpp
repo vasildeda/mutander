@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-MutanderAudioProcessor::MutanderAudioProcessor()
+PluginProcessor::PluginProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor(
          BusesProperties()
@@ -21,72 +21,72 @@ MutanderAudioProcessor::MutanderAudioProcessor()
 {
 }
 
-MutanderAudioProcessor::~MutanderAudioProcessor()
+PluginProcessor::~PluginProcessor()
 {
 }
 
 //==============================================================================
-const juce::String MutanderAudioProcessor::getName() const
+const juce::String PluginProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool MutanderAudioProcessor::acceptsMidi() const
+bool PluginProcessor::acceptsMidi() const
 {
     return true;
 }
 
-bool MutanderAudioProcessor::producesMidi() const
+bool PluginProcessor::producesMidi() const
 {
     return false;
 }
 
-bool MutanderAudioProcessor::isMidiEffect() const
+bool PluginProcessor::isMidiEffect() const
 {
     return false;
 }
 
-double MutanderAudioProcessor::getTailLengthSeconds() const
+double PluginProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int MutanderAudioProcessor::getNumPrograms()
+int PluginProcessor::getNumPrograms()
 {
     return 1;
 }
 
-int MutanderAudioProcessor::getCurrentProgram()
+int PluginProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void MutanderAudioProcessor::setCurrentProgram(int index)
+void PluginProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String MutanderAudioProcessor::getProgramName(int index)
+const juce::String PluginProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void MutanderAudioProcessor::changeProgramName(int index, const juce::String& newName)
+void PluginProcessor::changeProgramName(int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void MutanderAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+void PluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     midiDebouncer_.prepare(sampleRate, samplesPerBlock, 10);
     crossFader_.prepare(sampleRate, 50);
 }
 
-void MutanderAudioProcessor::releaseResources()
+void PluginProcessor::releaseResources()
 {
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool MutanderAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+bool PluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
      && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
@@ -101,7 +101,7 @@ bool MutanderAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) 
 }
 #endif
 
-void MutanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
 
@@ -109,13 +109,13 @@ void MutanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce
     processBuffer(buffer);
 }
 
-int32_t MutanderAudioProcessor::packMidiForMatch(const juce::MidiMessage& msg)
+int32_t PluginProcessor::packMidiForMatch(const juce::MidiMessage& msg)
 {
     const auto* data = msg.getRawData();
     return (static_cast<int32_t>(data[0]) << 8) | static_cast<int32_t>(data[1]);
 }
 
-bool MutanderAudioProcessor::midiMatches(const juce::MidiMessage& incoming, int32_t stored)
+bool PluginProcessor::midiMatches(const juce::MidiMessage& incoming, int32_t stored)
 {
     if (stored == kUnassignedTrigger)
         return false;
@@ -123,7 +123,7 @@ bool MutanderAudioProcessor::midiMatches(const juce::MidiMessage& incoming, int3
     return packMidiForMatch(incoming) == stored;
 }
 
-void MutanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
+void PluginProcessor::handleMidi(const juce::MidiBuffer& midi)
 {
     if (auto msg = midiDebouncer_.processBlock(midi))
     {
@@ -178,7 +178,7 @@ void MutanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
     }
 }
 
-void MutanderAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
+void PluginProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
 {
     const int numChannels = buffer.getNumChannels();
     const int numSamples = buffer.getNumSamples();
@@ -192,18 +192,18 @@ void MutanderAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
 }
 
 //==============================================================================
-bool MutanderAudioProcessor::hasEditor() const
+bool PluginProcessor::hasEditor() const
 {
     return true;
 }
 
-juce::AudioProcessorEditor* MutanderAudioProcessor::createEditor()
+juce::AudioProcessorEditor* PluginProcessor::createEditor()
 {
-    return new MutanderAudioProcessorEditor(*this);
+    return new PluginEditor(*this);
 }
 
 //==============================================================================
-void MutanderAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
+void PluginProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     auto xml = std::make_unique<juce::XmlElement>("Mutander");
     xml->setAttribute("version", 1);
@@ -225,7 +225,7 @@ void MutanderAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     copyXmlToBinary(*xml, destData);
 }
 
-void MutanderAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+void PluginProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     auto xml = getXmlFromBinary(data, sizeInBytes);
 
@@ -262,28 +262,28 @@ void MutanderAudioProcessor::setStateInformation(const void* data, int sizeInByt
 }
 
 //==============================================================================
-int32_t MutanderAudioProcessor::getStopTrigger(int slot) const
+int32_t PluginProcessor::getStopTrigger(int slot) const
 {
     if (slot < 0 || slot >= kMaxTriggers)
         return kUnassignedTrigger;
     return stopTriggers_[slot].load(std::memory_order_relaxed);
 }
 
-int32_t MutanderAudioProcessor::getGoTrigger(int slot) const
+int32_t PluginProcessor::getGoTrigger(int slot) const
 {
     if (slot < 0 || slot >= kMaxTriggers)
         return kUnassignedTrigger;
     return goTriggers_[slot].load(std::memory_order_relaxed);
 }
 
-void MutanderAudioProcessor::clearTriggers(int button)
+void PluginProcessor::clearTriggers(int button)
 {
     auto& triggers = (button == 0) ? stopTriggers_ : goTriggers_;
     for (int i = 0; i < kMaxTriggers; ++i)
         triggers[i].store(kUnassignedTrigger, std::memory_order_relaxed);
 }
 
-void MutanderAudioProcessor::setMuted(bool muted)
+void PluginProcessor::setMuted(bool muted)
 {
     isMuted_.store(muted, std::memory_order_relaxed);
     if (muted)
@@ -293,12 +293,12 @@ void MutanderAudioProcessor::setMuted(bool muted)
     triggerAsyncUpdate();
 }
 
-bool MutanderAudioProcessor::isMuted() const
+bool PluginProcessor::isMuted() const
 {
     return isMuted_.load(std::memory_order_relaxed);
 }
 
-void MutanderAudioProcessor::handleAsyncUpdate()
+void PluginProcessor::handleAsyncUpdate()
 {
     if (onStateChanged)
         onStateChanged();
@@ -307,5 +307,5 @@ void MutanderAudioProcessor::handleAsyncUpdate()
 //==============================================================================
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new MutanderAudioProcessor();
+    return new PluginProcessor();
 }

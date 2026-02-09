@@ -16,13 +16,13 @@
 #include <atomic>
 
 //==============================================================================
-class MutanderAudioProcessor : public juce::AudioProcessor,
+class PluginProcessor : public juce::AudioProcessor,
                                  public juce::AsyncUpdater
 {
 public:
     //==============================================================================
-    MutanderAudioProcessor();
-    ~MutanderAudioProcessor() override;
+    PluginProcessor();
+    ~PluginProcessor() override;
 
     //==============================================================================
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
@@ -111,5 +111,5 @@ private:
     void processBuffer(juce::AudioBuffer<float>& buffer);
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MutanderAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PluginProcessor)
 };

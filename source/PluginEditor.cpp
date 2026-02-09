@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcessor& p)
+PluginEditor::PluginEditor(PluginProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor_(p)
 {
     // Stop button (red)
@@ -64,12 +64,12 @@ MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcesso
     setSize(200, 396);
 }
 
-MutanderAudioProcessorEditor::~MutanderAudioProcessorEditor()
+PluginEditor::~PluginEditor()
 {
     audioProcessor_.onStateChanged = nullptr;
 }
 
-juce::String MutanderAudioProcessorEditor::formatTrigger(int32_t trigger)
+juce::String PluginEditor::formatTrigger(int32_t trigger)
 {
     if (trigger < 0)
         return {};
@@ -92,7 +92,7 @@ juce::String MutanderAudioProcessorEditor::formatTrigger(int32_t trigger)
     return "Ch " + juce::String(channel) + " " + typeName;
 }
 
-juce::String MutanderAudioProcessorEditor::formatTriggers(std::function<int32_t(int)> getter, int count)
+juce::String PluginEditor::formatTriggers(std::function<int32_t(int)> getter, int count)
 {
     juce::StringArray lines;
     for (int i = 0; i < count; ++i)
@@ -104,7 +104,7 @@ juce::String MutanderAudioProcessorEditor::formatTriggers(std::function<int32_t(
     return lines.isEmpty() ? "--" : lines.joinIntoString("\n");
 }
 
-void MutanderAudioProcessorEditor::updateButtons()
+void PluginEditor::updateButtons()
 {
     bool muted = audioProcessor_.isMuted();
     int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
@@ -113,22 +113,22 @@ void MutanderAudioProcessorEditor::updateButtons()
     stopButton_.setLearning(learning == 0);
     stopButton_.setText(formatTriggers(
         [this](int i) { return audioProcessor_.getStopTrigger(i); },
-        MutanderAudioProcessor::kMaxTriggers));
+        PluginProcessor::kMaxTriggers));
 
     goButton_.setSelected(!muted);
     goButton_.setLearning(learning == 1);
     goButton_.setText(formatTriggers(
         [this](int i) { return audioProcessor_.getGoTrigger(i); },
-        MutanderAudioProcessor::kMaxTriggers));
+        PluginProcessor::kMaxTriggers));
 }
 
 //==============================================================================
-void MutanderAudioProcessorEditor::paint(juce::Graphics& g)
+void PluginEditor::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 }
 
-void MutanderAudioProcessorEditor::resized()
+void PluginEditor::resized()
 {
     auto area = getLocalBounds().reduced(16);
     auto half = area.getHeight() / 2;

@@ -13,18 +13,18 @@
 #include "PluginProcessor.h"
 
 //==============================================================================
-class MutanderAudioProcessorEditor : public juce::AudioProcessorEditor
+class PluginEditor : public juce::AudioProcessorEditor
 {
 public:
-    MutanderAudioProcessorEditor(MutanderAudioProcessor&);
-    ~MutanderAudioProcessorEditor() override;
+    PluginEditor(PluginProcessor&);
+    ~PluginEditor() override;
 
     //==============================================================================
     void paint(juce::Graphics& g) override;
     void resized() override;
 
 private:
-    MutanderAudioProcessor& audioProcessor_;
+    PluginProcessor& audioProcessor_;
 
     LongPressButton stopButton_;
     LongPressButton goButton_;
@@ -33,5 +33,5 @@ private:
     static juce::String formatTrigger(int32_t trigger);
     static juce::String formatTriggers(std::function<int32_t(int)> getter, int count);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MutanderAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PluginEditor)
 };
