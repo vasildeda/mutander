@@ -27,8 +27,13 @@ MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcesso
         }
     };
     stopButton_.onLongPress = [this] {
-        audioProcessor_.clearTriggers(0);
-        audioProcessor_.midiLearnTarget_.store(0, std::memory_order_relaxed);
+        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 0)
+            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        else
+        {
+            audioProcessor_.clearTriggers(0);
+            audioProcessor_.midiLearnTarget_.store(0, std::memory_order_relaxed);
+        }
         updateButtons();
     };
     addAndMakeVisible(stopButton_);
@@ -47,8 +52,13 @@ MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcesso
         }
     };
     goButton_.onLongPress = [this] {
-        audioProcessor_.clearTriggers(1);
-        audioProcessor_.midiLearnTarget_.store(1, std::memory_order_relaxed);
+        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 1)
+            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        else
+        {
+            audioProcessor_.clearTriggers(1);
+            audioProcessor_.midiLearnTarget_.store(1, std::memory_order_relaxed);
+        }
         updateButtons();
     };
     addAndMakeVisible(goButton_);
