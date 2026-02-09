@@ -16,15 +16,10 @@ MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcesso
     // Stop button (red)
     stopButton_.setActiveColour(juce::Colours::red);
     stopButton_.onClick = [this] {
-        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 0)
-        {
+        int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
+        if (learning >= 0)
             audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
-            updateButtons();
-        }
-        else
-        {
-            audioProcessor_.setMuted(true);
-        }
+        audioProcessor_.setMuted(true);
     };
     stopButton_.onLongPress = [this] {
         if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 0)
@@ -41,15 +36,10 @@ MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcesso
     // Go button (green)
     goButton_.setActiveColour(juce::Colours::green);
     goButton_.onClick = [this] {
-        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 1)
-        {
+        int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
+        if (learning >= 0)
             audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
-            updateButtons();
-        }
-        else
-        {
-            audioProcessor_.setMuted(false);
-        }
+        audioProcessor_.setMuted(false);
     };
     goButton_.onLongPress = [this] {
         if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 1)
