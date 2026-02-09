@@ -24,7 +24,7 @@ juce_add_plugin(Mutander
 )
 
 # Add resources
-juce_add_binary_data(MutanderResources SOURCES
+juce_add_binary_data(BinaryResources SOURCES
     resources/background.svg
 )
 
@@ -56,7 +56,7 @@ target_link_libraries(Mutander PRIVATE
     juce::juce_graphics
     juce::juce_gui_basics
     juce::juce_gui_extra
-    MutanderResources
+    BinaryResources
 )
 
 # Set C++ standard
