@@ -38,7 +38,7 @@ void LongPressButton::paint(juce::Graphics& g)
 
     // Outline based on state
     if (learning_)
-        g.setColour(juce::Colours::red);
+        g.setColour(juce::Colours::yellow);
     else if (selected_)
         g.setColour(activeColour_);
     else
