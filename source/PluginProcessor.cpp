@@ -136,11 +136,21 @@ void MutanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
         {
             // Learning mode: fill next empty slot
             auto& triggers = (target == 0) ? stopTriggers_ : goTriggers_;
+            auto& oppositeTriggers = (target == 0) ? goTriggers_ : stopTriggers_;
+            auto packed = packMidiForMatch(*msg);
+
+            // Remove from opposite set if already assigned there
+            for (int i = 0; i < kMaxTriggers; ++i)
+            {
+                if (oppositeTriggers[i].load(std::memory_order_relaxed) == packed)
+                    oppositeTriggers[i].store(kUnassignedTrigger, std::memory_order_relaxed);
+            }
+
             for (int i = 0; i < kMaxTriggers; ++i)
             {
                 if (triggers[i].load(std::memory_order_relaxed) == kUnassignedTrigger)
                 {
-                    triggers[i].store(packMidiForMatch(*msg), std::memory_order_relaxed);
+                    triggers[i].store(packed, std::memory_order_relaxed);
                     triggerAsyncUpdate();
                     return;
                 }
