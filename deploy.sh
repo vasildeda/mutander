@@ -1,1 +1,1 @@
-open -R build/Switchander_artefacts/VST3/Switchander.vst3
+open -R build/Mutander_artefacts/VST3/Mutander.vst3

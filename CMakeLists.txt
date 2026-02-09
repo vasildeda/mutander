@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(Switchander VERSION 1.0.0)
+project(Mutander VERSION 1.0.0)
 
 # Add JUCE
 add_subdirectory(libs/juce)
 
 # Create a JUCE plugin
-juce_add_plugin(Switchander
+juce_add_plugin(Mutander
     COMPANY_NAME "Vasilovo"
     PLUGIN_MANUFACTURER_CODE VSLV
-    PLUGIN_CODE Swch
+    PLUGIN_CODE Mutn
     FORMATS AU VST3 Standalone
-    PRODUCT_NAME "Switchander"
-    PLUGIN_NAME "Switchander"
+    PRODUCT_NAME "Mutander"
+    PLUGIN_NAME "Mutander"
     VERSION 1.0.0
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT TRUE
@@ -24,12 +24,12 @@ juce_add_plugin(Switchander
 )
 
 # Add resources
-juce_add_binary_data(SwitchanderResources SOURCES
+juce_add_binary_data(MutanderResources SOURCES
     resources/background.svg
 )
 
 # Add source files
-target_sources(Switchander PRIVATE
+target_sources(Mutander PRIVATE
     source/CrossFader.cpp
     source/LongPressButton.cpp
     source/MidiDebouncer.cpp
@@ -38,13 +38,13 @@ target_sources(Switchander PRIVATE
 )
 
 # Add headers
-target_include_directories(Switchander PRIVATE
+target_include_directories(Mutander PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/source
 )
 
 # Add JUCE modules
-target_link_libraries(Switchander PRIVATE
+target_link_libraries(Mutander PRIVATE
     juce::juce_audio_basics
     juce::juce_audio_devices
     juce::juce_audio_formats
@@ -56,14 +56,14 @@ target_link_libraries(Switchander PRIVATE
     juce::juce_graphics
     juce::juce_gui_basics
     juce::juce_gui_extra
-    SwitchanderResources
+    MutanderResources
 )
 
 # Set C++ standard
-target_compile_features(Switchander PUBLIC cxx_std_17)
+target_compile_features(Mutander PUBLIC cxx_std_17)
 
 
 # Disable VST2 to avoid parameter automation conflict with VST3
-target_compile_definitions(Switchander PRIVATE
+target_compile_definitions(Mutander PRIVATE
     JUCE_VST3_CAN_REPLACE_VST2=0
 )

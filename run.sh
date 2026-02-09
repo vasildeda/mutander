@@ -1,1 +1,1 @@
-cmake --build build && AudioPluginHost.app/Contents/MacOS/AudioPluginHost Switchander.filtergraph
+cmake --build build && AudioPluginHost.app/Contents/MacOS/AudioPluginHost Mutander.filtergraph

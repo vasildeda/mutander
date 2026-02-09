@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SwitchanderAudioProcessorEditor::SwitchanderAudioProcessorEditor(SwitchanderAudioProcessor& p)
+MutanderAudioProcessorEditor::MutanderAudioProcessorEditor(MutanderAudioProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor_(p)
 {
     background_ = juce::Drawable::createFromImageData(BinaryData::background_svg,
@@ -49,12 +49,12 @@ SwitchanderAudioProcessorEditor::SwitchanderAudioProcessorEditor(SwitchanderAudi
     setSize(704, 396);
 }
 
-SwitchanderAudioProcessorEditor::~SwitchanderAudioProcessorEditor()
+MutanderAudioProcessorEditor::~MutanderAudioProcessorEditor()
 {
     audioProcessor_.onStateChanged = nullptr;
 }
 
-void SwitchanderAudioProcessorEditor::updateChannelButtons()
+void MutanderAudioProcessorEditor::updateChannelButtons()
 {
     int selectedBus = audioProcessor_.selectedBus_.load(std::memory_order_relaxed);
     int learningBus = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
@@ -93,7 +93,7 @@ void SwitchanderAudioProcessorEditor::updateChannelButtons()
 }
 
 //==============================================================================
-void SwitchanderAudioProcessorEditor::paint(juce::Graphics& g)
+void MutanderAudioProcessorEditor::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 
@@ -102,7 +102,7 @@ void SwitchanderAudioProcessorEditor::paint(juce::Graphics& g)
                                 juce::RectanglePlacement::centred, 1.0f);
 }
 
-void SwitchanderAudioProcessorEditor::resized()
+void MutanderAudioProcessorEditor::resized()
 {
     using Track = juce::Grid::TrackInfo;
     using Fr = juce::Grid::Fr;

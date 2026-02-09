@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SwitchanderAudioProcessor::SwitchanderAudioProcessor()
+MutanderAudioProcessor::MutanderAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor(
          BusesProperties()
@@ -25,75 +25,75 @@ SwitchanderAudioProcessor::SwitchanderAudioProcessor()
 {
 }
 
-SwitchanderAudioProcessor::~SwitchanderAudioProcessor()
+MutanderAudioProcessor::~MutanderAudioProcessor()
 {
 }
 
 //==============================================================================
-const juce::String SwitchanderAudioProcessor::getName() const
+const juce::String MutanderAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool SwitchanderAudioProcessor::acceptsMidi() const
+bool MutanderAudioProcessor::acceptsMidi() const
 {
     return true;
 }
 
-bool SwitchanderAudioProcessor::producesMidi() const
+bool MutanderAudioProcessor::producesMidi() const
 {
     return false;
 }
 
-bool SwitchanderAudioProcessor::isMidiEffect() const
+bool MutanderAudioProcessor::isMidiEffect() const
 {
     return false;
 }
 
-double SwitchanderAudioProcessor::getTailLengthSeconds() const
+double MutanderAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int SwitchanderAudioProcessor::getNumPrograms()
+int MutanderAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int SwitchanderAudioProcessor::getCurrentProgram()
+int MutanderAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void SwitchanderAudioProcessor::setCurrentProgram(int index)
+void MutanderAudioProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String SwitchanderAudioProcessor::getProgramName(int index)
+const juce::String MutanderAudioProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void SwitchanderAudioProcessor::changeProgramName(int index, const juce::String& newName)
+void MutanderAudioProcessor::changeProgramName(int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void SwitchanderAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+void MutanderAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     midiDebouncer_.prepare(sampleRate, samplesPerBlock, 10);
     crossFader_.prepare(sampleRate, 50);
 }
 
-void SwitchanderAudioProcessor::releaseResources()
+void MutanderAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool SwitchanderAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+bool MutanderAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
@@ -113,7 +113,7 @@ bool SwitchanderAudioProcessor::isBusesLayoutSupported(const BusesLayout& layout
 }
 #endif
 
-void SwitchanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void MutanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
 
@@ -121,13 +121,13 @@ void SwitchanderAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
     processBuffer(buffer);
 }
 
-int32_t SwitchanderAudioProcessor::packMidiForMatch(const juce::MidiMessage& msg)
+int32_t MutanderAudioProcessor::packMidiForMatch(const juce::MidiMessage& msg)
 {
     const auto* data = msg.getRawData();
     return (static_cast<int32_t>(data[0]) << 8) | static_cast<int32_t>(data[1]);
 }
 
-bool SwitchanderAudioProcessor::midiMatches(const juce::MidiMessage& incoming, int32_t stored)
+bool MutanderAudioProcessor::midiMatches(const juce::MidiMessage& incoming, int32_t stored)
 {
     if (stored == kUnassignedTrigger)
         return false;
@@ -139,7 +139,7 @@ bool SwitchanderAudioProcessor::midiMatches(const juce::MidiMessage& incoming, i
     return packMidiForMatch(incoming) == stored;
 }
 
-void SwitchanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
+void MutanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
 {
     if (auto msg = midiDebouncer_.processBlock(midi))
     {
@@ -167,7 +167,7 @@ void SwitchanderAudioProcessor::handleMidi(const juce::MidiBuffer& midi)
     }
 }
 
-void SwitchanderAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
+void MutanderAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
 {
     auto out = getBusBuffer(buffer, false, 0);
     const int numSamples = out.getNumSamples();
@@ -183,20 +183,20 @@ void SwitchanderAudioProcessor::processBuffer(juce::AudioBuffer<float>& buffer)
 }
 
 //==============================================================================
-bool SwitchanderAudioProcessor::hasEditor() const
+bool MutanderAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* SwitchanderAudioProcessor::createEditor()
+juce::AudioProcessorEditor* MutanderAudioProcessor::createEditor()
 {
-    return new SwitchanderAudioProcessorEditor(*this);
+    return new MutanderAudioProcessorEditor(*this);
 }
 
 //==============================================================================
-void SwitchanderAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
+void MutanderAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
-    auto xml = std::make_unique<juce::XmlElement>("Switchander");
+    auto xml = std::make_unique<juce::XmlElement>("Mutander");
     xml->setAttribute("version", 1);
 
     auto* triggers = xml->createNewChildElement("triggers");
@@ -209,11 +209,11 @@ void SwitchanderAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     copyXmlToBinary(*xml, destData);
 }
 
-void SwitchanderAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+void MutanderAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     auto xml = getXmlFromBinary(data, sizeInBytes);
 
-    if (xml != nullptr && xml->hasTagName("Switchander"))
+    if (xml != nullptr && xml->hasTagName("Mutander"))
     {
         // int version = xml->getIntAttribute("version", 1);
 
@@ -235,20 +235,20 @@ void SwitchanderAudioProcessor::setStateInformation(const void* data, int sizeIn
 }
 
 //==============================================================================
-int32_t SwitchanderAudioProcessor::getMidiTrigger(int bus) const
+int32_t MutanderAudioProcessor::getMidiTrigger(int bus) const
 {
     if (bus < 0 || bus >= 5)
         return kUnassignedTrigger;
     return midiTriggers_[bus].load(std::memory_order_relaxed);
 }
 
-void SwitchanderAudioProcessor::clearMidiTrigger(int bus)
+void MutanderAudioProcessor::clearMidiTrigger(int bus)
 {
     if (bus >= 0 && bus < 5)
         midiTriggers_[bus].store(kUnassignedTrigger, std::memory_order_relaxed);
 }
 
-void SwitchanderAudioProcessor::selectBus(int bus)
+void MutanderAudioProcessor::selectBus(int bus)
 {
     if (bus < 0 || bus >= 5)
         return;
@@ -257,7 +257,7 @@ void SwitchanderAudioProcessor::selectBus(int bus)
     triggerAsyncUpdate();
 }
 
-void SwitchanderAudioProcessor::handleAsyncUpdate()
+void MutanderAudioProcessor::handleAsyncUpdate()
 {
     if (onStateChanged)
         onStateChanged();
@@ -267,5 +267,5 @@ void SwitchanderAudioProcessor::handleAsyncUpdate()
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new SwitchanderAudioProcessor();
+    return new MutanderAudioProcessor();
 }

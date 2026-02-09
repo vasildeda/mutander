@@ -61,8 +61,8 @@
   </FILTER>
   <FILTER uid="31" x="0.345" y="0.5746887966804979" useARA="0" uiLastX_Normal="79"
           uiLastY_Normal="206" uiopen_Normal="1">
-    <PLUGIN name="Switchander" format="VST3" category="Fx" manufacturer="Vasilovo"
-            version="1.0.0" file="/Users/vasil/Library/Audio/Plug-Ins/VST3/Switchander.vst3"
+    <PLUGIN name="Mutander" format="VST3" category="Fx" manufacturer="Vasilovo"
+            version="1.0.0" file="/Users/vasil/Library/Audio/Plug-Ins/VST3/Mutander.vst3"
             uniqueId="15f5b35c" isInstrument="0" fileTime="19c33f235d9" infoUpdateTime="19c33f299d7"
             numInputs="10" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="33955f66"/>

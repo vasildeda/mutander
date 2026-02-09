@@ -14,23 +14,23 @@
 #include "PluginProcessor.h"
 
 //==============================================================================
-class SwitchanderAudioProcessorEditor : public juce::AudioProcessorEditor
+class MutanderAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    SwitchanderAudioProcessorEditor(SwitchanderAudioProcessor&);
-    ~SwitchanderAudioProcessorEditor() override;
+    MutanderAudioProcessorEditor(MutanderAudioProcessor&);
+    ~MutanderAudioProcessorEditor() override;
 
     //==============================================================================
     void paint(juce::Graphics& g) override;
     void resized() override;
 
 private:
-    SwitchanderAudioProcessor& audioProcessor_;
+    MutanderAudioProcessor& audioProcessor_;
 
     std::unique_ptr<juce::Drawable> background_;
     std::array<LongPressButton, 5> channelButtons_;
 
     void updateChannelButtons();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SwitchanderAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MutanderAudioProcessorEditor)
 };

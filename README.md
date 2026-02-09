@@ -1,4 +1,4 @@
-# Switchander
+# Mutander
 
 A JUCE application project.
 
@@ -7,5 +7,5 @@ A JUCE application project.
 ```bash
 cmake -S . -B build
 cmake --build build
-AudioPluginHost.app/Contents/MacOS/AudioPluginHost Switchander.filtergraph
+AudioPluginHost.app/Contents/MacOS/AudioPluginHost Mutander.filtergraph
 ```

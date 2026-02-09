@@ -7,16 +7,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 cmake -S . -B build
 cmake --build build
-AudioPluginHost.app/Contents/MacOS/AudioPluginHost Switchander.filtergraph
+AudioPluginHost.app/Contents/MacOS/AudioPluginHost Mutander.filtergraph
 ```
 
 ## Architecture
 
-Switchander is a JUCE audio plugin (AU/VST3/Standalone) that processes MIDI input to control audio crossfading between buses.
+Mutander is a JUCE audio plugin (AU/VST3/Standalone) that processes MIDI input to control audio crossfading between buses.
 
 **Core Components:**
-- `SwitchanderAudioProcessor` - Main plugin processor handling MIDI and audio
-- `SwitchanderAudioProcessorEditor` - GUI with 2x6 grid layout
+- `MutanderAudioProcessor` - Main plugin processor handling MIDI and audio
+- `MutanderAudioProcessorEditor` - GUI with 2x6 grid layout
 - `CrossFader` - Smoothed audio crossfader between buses using `juce::SmoothedValue`
 - `MidiDebouncer` - Filters rapid MIDI messages, allowing only one per configurable time window
 - `LongPressButton` - SVG-based button with short click and long press detection modes
