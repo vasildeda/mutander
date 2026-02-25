@@ -32,7 +32,7 @@ Semaforte is a JUCE audio plugin (AU/VST3/Standalone) that processes MIDI input 
 - Member variables use underscore suffix: `audioProcessor_` not `audioProcessor`
 - Use JUCE naming conventions (camelCase for methods, PascalCase for classes)
 - Split interface (header) and implementation (cpp)
-- Each class should have it's own files
+- Each class should have its own files
 
 ## Commit Messages
 
