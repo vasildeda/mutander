@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(Semaforte VERSION 1.0.0)
+project(Semaforte VERSION 1.1.0)
 
 # Add JUCE
 add_subdirectory(libs/juce)
@@ -13,7 +13,7 @@ juce_add_plugin(Semaforte
     FORMATS AU VST3 Standalone
     PRODUCT_NAME "Semaforte"
     PLUGIN_NAME "Semaforte"
-    VERSION 1.0.0
+    VERSION ${PROJECT_VERSION}
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT TRUE
     NEEDS_MIDI_OUTPUT FALSE
