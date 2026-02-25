@@ -222,6 +222,8 @@ void PluginProcessor::getStateInformation(juce::MemoryBlock& destData)
         trigger->addTextElement(juce::String(goTriggers_[i].load(std::memory_order_relaxed)));
     }
 
+    xml->setAttribute("muted", isMuted());
+
     copyXmlToBinary(*xml, destData);
 }
 
@@ -257,7 +259,7 @@ void PluginProcessor::setStateInformation(const void* data, int sizeInBytes)
             }
         }
 
-        triggerAsyncUpdate();
+        setMuted(xml->getBoolAttribute("muted", false));
     }
 }
 
