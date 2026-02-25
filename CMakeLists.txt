@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(Semaforte VERSION 1.1.1)
+project(Semaforte VERSION 1.1.2)
 
 # Add JUCE
 add_subdirectory(libs/juce)

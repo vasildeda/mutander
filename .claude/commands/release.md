@@ -1,1 +1,1 @@
-Update the version in CMakeLists.txt `project(... VERSION ...)` to $ARGUMENTS, then commit all staged and unstaged changes with the message "Release $ARGUMENTS" and tag the commit with "v$ARGUMENTS".
+Update the version in CMakeLists.txt `project(... VERSION ...)` to $ARGUMENTS, then build the project with `cmake -S . -B build && cmake --build build`. If the build succeeds, commit all staged and unstaged changes with the message "Release $ARGUMENTS" and tag the commit with "v$ARGUMENTS". If the build fails, report the error.
