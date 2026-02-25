@@ -5,7 +5,7 @@
 class CrossFader
 {
 public:
-    void prepare(double sampleRate, int fadeTimeMs);
+    void prepare(double sampleRate, int fadeTimeMs, float initialGain = 1.0f);
     void mute();
     void unmute();
     float getNextGain();

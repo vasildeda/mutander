@@ -78,7 +78,7 @@ void PluginProcessor::changeProgramName(int index, const juce::String& newName)
 void PluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     midiDebouncer_.prepare(sampleRate, samplesPerBlock, 10);
-    crossFader_.prepare(sampleRate, 50);
+    crossFader_.prepare(sampleRate, 50, isMuted() ? 0.0f : 1.0f);
 }
 
 void PluginProcessor::releaseResources()

@@ -1,9 +1,9 @@
 #include "CrossFader.h"
 
-void CrossFader::prepare(double sampleRate, int fadeTimeMs)
+void CrossFader::prepare(double sampleRate, int fadeTimeMs, float initialGain)
 {
     fader_.reset(sampleRate, fadeTimeMs / 1000.0);
-    fader_.setCurrentAndTargetValue(1.0f);
+    fader_.setCurrentAndTargetValue(initialGain);
 }
 
 void CrossFader::mute()
