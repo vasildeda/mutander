@@ -58,12 +58,6 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    // MIDI learn: -1 = off, 0 = learning stop, 1 = learning go
-    std::atomic<int> midiLearnTarget_ { -1 };
-
-    // Muted state
-    std::atomic<bool> isMuted_ { false };
-
     // Callback when state changes
     std::function<void()> onStateChanged;
 
@@ -74,10 +68,13 @@ public:
     // Clear all triggers for a button (0=stop, 1=go)
     void clearTriggers(int button);
 
-    // Set muted state from GUI
+    // Access muted state from GUI
+    bool isMuted() const;
     void setMuted(bool muted);
 
-    bool isMuted() const;
+    // MIDI learn: -1 = off, 0 = learning stop, 1 = learning go
+    int getMidiLearnTarget() const;
+    void setMidiLearnTarget(int target);
 
     void handleAsyncUpdate() override;
 
@@ -87,6 +84,9 @@ private:
     //==============================================================================
     MidiDebouncer midiDebouncer_;
     CrossFader crossFader_;
+    // MIDI learn: -1 = off, 0 = learning stop, 1 = learning go
+    std::atomic<int> midiLearnTarget_ { -1 };
+    std::atomic<bool> isMuted_ { false };
 
     // MIDI triggers. -1 means unassigned.
     // Packed as (status << 8) | data1, ignoring velocity/value.

@@ -283,6 +283,11 @@ void PluginProcessor::clearTriggers(int button)
         triggers[i].store(kUnassignedTrigger, std::memory_order_relaxed);
 }
 
+bool PluginProcessor::isMuted() const
+{
+    return isMuted_.load(std::memory_order_relaxed);
+}
+
 void PluginProcessor::setMuted(bool muted)
 {
     isMuted_.store(muted, std::memory_order_relaxed);
@@ -293,9 +298,14 @@ void PluginProcessor::setMuted(bool muted)
     triggerAsyncUpdate();
 }
 
-bool PluginProcessor::isMuted() const
+int PluginProcessor::getMidiLearnTarget() const
 {
-    return isMuted_.load(std::memory_order_relaxed);
+    return midiLearnTarget_.load(std::memory_order_relaxed);
+}
+
+void PluginProcessor::setMidiLearnTarget(int target)
+{
+    midiLearnTarget_.store(target, std::memory_order_relaxed);
 }
 
 void PluginProcessor::handleAsyncUpdate()

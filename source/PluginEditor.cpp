@@ -33,18 +33,17 @@ PluginEditor::PluginEditor(PluginProcessor& p)
     // Stop button (red)
     stopButton_.setActiveColour(juce::Colours::red);
     stopButton_.onClick = [this] {
-        int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
-        if (learning >= 0)
-            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        if (audioProcessor_.getMidiLearnTarget() >= 0)
+            audioProcessor_.setMidiLearnTarget(-1);
         audioProcessor_.setMuted(true);
     };
     stopButton_.onLongPress = [this] {
-        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 0)
-            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        if (audioProcessor_.getMidiLearnTarget() == 0)
+            audioProcessor_.setMidiLearnTarget(-1);
         else
         {
             audioProcessor_.clearTriggers(0);
-            audioProcessor_.midiLearnTarget_.store(0, std::memory_order_relaxed);
+            audioProcessor_.setMidiLearnTarget(0);
         }
         updateButtons();
     };
@@ -53,18 +52,17 @@ PluginEditor::PluginEditor(PluginProcessor& p)
     // Go button (green)
     goButton_.setActiveColour(juce::Colours::green);
     goButton_.onClick = [this] {
-        int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
-        if (learning >= 0)
-            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        if (audioProcessor_.getMidiLearnTarget() >= 0)
+            audioProcessor_.setMidiLearnTarget(-1);
         audioProcessor_.setMuted(false);
     };
     goButton_.onLongPress = [this] {
-        if (audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed) == 1)
-            audioProcessor_.midiLearnTarget_.store(-1, std::memory_order_relaxed);
+        if (audioProcessor_.getMidiLearnTarget() == 1)
+            audioProcessor_.setMidiLearnTarget(-1);
         else
         {
             audioProcessor_.clearTriggers(1);
-            audioProcessor_.midiLearnTarget_.store(1, std::memory_order_relaxed);
+            audioProcessor_.setMidiLearnTarget(1);
         }
         updateButtons();
     };
@@ -124,7 +122,7 @@ juce::String PluginEditor::formatTriggers(std::function<int32_t(int)> getter, in
 void PluginEditor::updateButtons()
 {
     bool muted = audioProcessor_.isMuted();
-    int learning = audioProcessor_.midiLearnTarget_.load(std::memory_order_relaxed);
+    int learning = audioProcessor_.getMidiLearnTarget();
 
     stopButton_.setSelected(muted);
     stopButton_.setLearning(learning == 0);
