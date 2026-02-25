@@ -285,12 +285,12 @@ void PluginProcessor::clearTriggers(int button)
 
 bool PluginProcessor::isMuted() const
 {
-    return isMuted_.load(std::memory_order_relaxed);
+    return muted_.load(std::memory_order_relaxed);
 }
 
 void PluginProcessor::setMuted(bool muted)
 {
-    isMuted_.store(muted, std::memory_order_relaxed);
+    muted_.store(muted, std::memory_order_relaxed);
     if (muted)
         crossFader_.mute();
     else

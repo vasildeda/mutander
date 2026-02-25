@@ -86,7 +86,7 @@ private:
     CrossFader crossFader_;
     // MIDI learn: -1 = off, 0 = learning stop, 1 = learning go
     std::atomic<int> midiLearnTarget_ { -1 };
-    std::atomic<bool> isMuted_ { false };
+    std::atomic<bool> muted_ { false };
 
     // MIDI triggers. -1 means unassigned.
     // Packed as (status << 8) | data1, ignoring velocity/value.
